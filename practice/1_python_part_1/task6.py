@@ -18,7 +18,21 @@ with open(filename) as opened_file:
 """
 from typing import Tuple
 
-
 def get_min_max(filename: str) -> Tuple[int, int]:
-    ...
+    min_value = float('inf')  # Initialize min_value to positive infinity
+    max_value = float('-inf')  # Initialize max_value to negative infinity
+    
+    with open(filename) as opened_file:
+        for line in opened_file:
+            value = int(line.strip())
+            min_value = min(min_value, value)
+            max_value = max(max_value, value)
+    
+    return min_value, max_value
+
+# Example usage:
+filename = "your_file.txt"
+min_val, max_val = get_min_max(filename)
+print(f"Minimum value: {min_val}")
+print(f"Maximum value: {max_val}")
 

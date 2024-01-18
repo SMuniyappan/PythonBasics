@@ -14,6 +14,29 @@ Examples:
 """
 from typing import Iterable
 
-
 def build_from_unique_words(*lines: Iterable[str], word_number: int) -> str:
-    ...
+    if word_number < 0:
+        return "Invalid word number"
+
+    unique_words = set()
+    
+    for line in lines:
+        words = line.split()
+        unique_words.update(words)
+
+    unique_words = list(unique_words)
+    
+    if word_number >= len(unique_words):
+        return "Word number exceeds the unique word count"
+
+    return unique_words[word_number]
+
+# Example usage:
+lines = [
+    "This is an example",
+    "of a function to",
+    "build a string from unique words"
+]
+
+result = build_from_unique_words(*lines, word_number=2)
+print(result)  # Output: "is"

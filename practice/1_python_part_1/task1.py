@@ -11,8 +11,19 @@ Examples:
     >>> delete_from_list([], 'b')
     []
 """
+
 from typing import List, Any
 
-
 def delete_from_list(list_to_clean: List, item_to_delete: Any) -> List:
-    ...
+    try:
+        index = list_to_clean.index(item_to_delete)
+        list_to_clean.pop(index)
+    except ValueError:
+        pass  # The element to delete is not in the list
+    return list_to_clean
+
+# Example usage:
+my_list = [1, 2, 3, 4, 5]
+item_to_remove = 3
+result_list = delete_from_list(my_list, item_to_remove)
+print(result_list)  # Output: [1, 2, 4, 5]

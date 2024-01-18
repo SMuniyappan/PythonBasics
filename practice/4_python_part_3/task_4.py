@@ -14,11 +14,28 @@ Example:
 {"some_name": "Courtney Duncan", "fake-address": "8107 Nicole Orchard Suite 762\nJosephchester, WI 05981"}
 """
 
-import argparse
 
+import argparse
+from faker import Faker
+from unittest.mock import patch
 
 def print_name_address(args: argparse.Namespace) -> None:
-    ...
+    fake = Faker()
+
+    for _ in range(args.number):
+        data = {}
+        for field, provider in args.fields.items():
+            data[field] = getattr(fake, provider)()
+
+        print(data)
+
+@patch('builtins.print')
+def test_print_name_address(mock_print):
+    fake_args = argparse.Namespace(number=2, fields={'fake_address': 'address', 'some_name': 'name'})
+
+    print_name_address(fake_args)
+
+    assert mock_print.call_count == 2
 
 
 """
